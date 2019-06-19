@@ -1,6 +1,8 @@
 package pidfile
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPidfile(t *testing.T) {
 	p := New("/tmp/test.pid")
@@ -8,4 +10,8 @@ func TestPidfile(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 	defer p.Remove()
+
+	if pid := p.ProcessID(); pid == 0 {
+		t.Fatal("pidfile create failed")
+	}
 }
